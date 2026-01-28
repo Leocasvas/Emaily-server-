@@ -1,0 +1,19 @@
+{
+  "name": "emaily-server",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "engines": {
+    "node": "22.20.0",
+    "npm": "11.7.0"
+  },
+  "scripts": {
+    "start": "nodemon index.js"  
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
