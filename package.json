@@ -11,9 +11,15 @@
     "npm": "11.7.0"
   },
   "scripts": {
-    "start": "nodemon index.js"  
+    "start": "nodemon index.js",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
-    "express": "^5.2.1"
+    "cookie-session": "^2.1.1",
+    "express": "^5.2.1",
+    "mongoose": "^9.1.5",
+    "nodemon": "^3.1.11",
+    "passport": "^0.5.3",
+    "passport-google-oauth20": "^2.0.0"
   }
 }
