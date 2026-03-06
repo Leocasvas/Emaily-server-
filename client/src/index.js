@@ -7,9 +7,11 @@ import { legacy_createStore as createStore, applyMiddleware } from "redux";
 import reducers from "./reducers";
 import reduxThunk from "redux-thunk";
 
-// Development only axios helper!
-import axios from "axios";
-window.axios = axios;
+// Development only axios helper
+if (process.env.NODE_ENV === "development") {
+  const axios = require("axios");
+  window.axios = axios;
+}
 
 const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
