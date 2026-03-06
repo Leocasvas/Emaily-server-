@@ -5,7 +5,8 @@ export default function emails(emails) {
   const invalidEmails = emails
     .split(",")
     .map((email) => email.trim())
-    .filter((email) => re.test(email) === false);
+    // Ignore empty strings that can result from trailing commas
+    .filter((email) => email && re.test(email) === false);
 
   if (invalidEmails.length) {
     return `These emails are invalid: ${invalidEmails}`;
