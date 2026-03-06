@@ -1,13 +1,11 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PaymentsStripe from "./PaymentsStripe";
 
-const Header = () => {
-  const auth = useSelector((state) => state.auth);
-
-  const renderContent = () => {
-    switch (auth) {
+class Header extends Component {
+  renderContent() {
+    switch (this.props.auth) {
       case null:
         return;
       case false:
@@ -18,33 +16,38 @@ const Header = () => {
         );
       default:
         return [
-          <li key="payments">
+          <li key="1">
             <PaymentsStripe />
           </li>,
-          <li key="credits" style={{ margin: "0 10px" }}>
-            Credits: {auth.credits}
+          <li key="3" style={{ margin: "0 10px" }}>
+            Credits: {this.props.auth.credits}
           </li>,
-          <li key="logout">
+          <li key="2">
             <a href="/api/logout">Logout</a>
           </li>,
         ];
     }
-  };
+  }
 
-  return (
-    <nav>
-      <div className="nav-wrapper">
-        <Link
-          to={auth ? "/surveys" : "/"}
-          className="left brand-logo"
-          style={{ marginLeft: "10px" }}
-        >
-          Emaily
-        </Link>
-        <ul className="right">{renderContent()}</ul>
-      </div>
-    </nav>
-  );
-};
+  render() {
+    return (
+      <nav>
+        <div className="nav-wrapper">
+          <Link
+            to={this.props.auth ? "/surveys" : "/"}
+            className="left brand-logo"
+          >
+            Emaily
+          </Link>
+          <ul className="right">{this.renderContent()}</ul>
+        </div>
+      </nav>
+    );
+  }
+}
 
-export default Header;
+function mapStateToProps({ auth }) {
+  return { auth };
+}
+
+export default connect(mapStateToProps)(Header);

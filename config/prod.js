@@ -9,4 +9,5 @@ module.exports = {
     ? process.env.SEND_GRID_KEY.trim()
     : process.env.SEND_GRID_KEY,
   redirectDomain: process.env.REDIRECT_DOMAIN,
+  redirectDomainNgrok: process.env.REDIRECT_DOMAIN_NGROK,
 };
