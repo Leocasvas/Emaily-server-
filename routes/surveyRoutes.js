@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const requireLogin = require("../middlewares/requireLogin");
 const requireCredits = require("../middlewares/requireCredits");
 const Mailer = require("../services/Mailer");
-const template = require("../services/emailTemplates/surveyTemplate");
 const surveyTemplate = require("../services/emailTemplates/surveyTemplate");
 
 const Survey = mongoose.model("surveys");
@@ -36,7 +35,7 @@ module.exports = (app) => {
         }
       })
       .compact()
-      .uniqBy("email", "surveyId")
+      .uniqBy((p) => [p.email, p.surveyId].join())
       .each(({ surveyId, email, choice }) => {
         Survey.updateOne(
           {
@@ -66,7 +65,8 @@ module.exports = (app) => {
       body,
       recipients: recipients
         .split(",")
-        .map((email) => ({ email: email.trim() })),
+        .map((email) => ({ email: email.trim() }))
+        .filter(({ email }) => email),
       _user: req.user.id,
       dateSent: Date.now(),
     });
