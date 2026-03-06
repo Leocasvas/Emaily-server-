@@ -17,7 +17,23 @@ module.exports = (app) => {
     res.send(surveys);
   });
 
-  app.get("/api/surveys/:surveyId/:choice", (req, res) => {
+  app.get("/api/surveys/:surveyId/:choice/:email", (req, res) => {
+    const { surveyId, choice, email } = req.params;
+
+    Survey.updateOne(
+      {
+        _id: surveyId,
+        recipients: {
+          $elemMatch: { email: email, responded: false },
+        },
+      },
+      {
+        $inc: { [choice]: 1 },
+        $set: { "recipients.$.responded": true },
+        lastResponded: new Date(),
+      },
+    ).exec();
+
     res.send("thanks for sending survey");
   });
 
